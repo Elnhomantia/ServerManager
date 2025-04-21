@@ -60,7 +60,14 @@ QStringList SshClient::executeCommands(const QStringList & commands)
     QStringList results;
     for(const QString & command: commands)
     {
-        results.append(this->executeCommand(command));
+        try
+        {
+            results.append(this->executeCommand(command));
+        } catch (const Exception<SshClientError> & e)
+        {
+            throw e;
+        }
+
     }
     return results;
 }
