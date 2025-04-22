@@ -9,7 +9,7 @@
 
 Computer::Computer(User u) : user(u) {}
 
-void Computer::wakeup(quint16 port = 9)
+void Computer::wakeup(quint16 port)
 {
     QByteArray mac = QByteArray::fromHex(this->macAddress.remove(':').toLatin1());
 

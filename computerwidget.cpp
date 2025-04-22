@@ -6,10 +6,38 @@ ComputerWidget::ComputerWidget(QWidget *parent)
     , ui(new Ui::ComputerWidget)
 {
     ui->setupUi(this);
-    //ui->statsFrame;
 }
 
 ComputerWidget::~ComputerWidget()
 {
     delete ui;
 }
+
+void ComputerWidget::on_startButton_clicked()
+{
+    if(nullptr == this->computer)
+    {
+
+        return;
+    }
+    this->computer->wakeup();
+}
+void ComputerWidget::on_rebootButton_clicked()
+{
+    if(nullptr == this->computer)
+    {
+
+        return;
+    }
+    this->computer->reboot();
+}
+void ComputerWidget::on_shutdownButton_clicked()
+{
+    if(nullptr == this->computer)
+    {
+
+        return;
+    }
+    this->computer->shutdown();
+}
+

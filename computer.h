@@ -22,7 +22,7 @@ public:
      * The macAddress and ip must be set.
      * @param port Configured port for wakeup.
      */
-    void wakeup(quint16 port);
+    void wakeup(quint16 port = 9);
     /**
      * @brief Restart the computer.
      * The macAddress and ip must be set.

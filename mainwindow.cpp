@@ -6,6 +6,21 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setStyleSheet(R"(
+    QWidget {
+        background-color: #2b2b2b;
+        color: #d3d3d3;
+    }
+    QPushButton {
+        background-color: #d3d3d3;
+    }
+    QPushButton:hover {
+        background-color: #eeeeee;
+    }
+    QPushButton:pressed {
+        background-color: #b0b0b0;
+    }
+    )");
 }
 
 MainWindow::~MainWindow()
