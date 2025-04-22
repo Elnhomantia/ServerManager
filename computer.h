@@ -12,17 +12,19 @@ class Computer
 private:
     QString ipAddress;
     QString macAddress;
+    QString name;
     User user;
+    quint16 port;
 
 public:
-    Computer(User u);
+    Computer(User u, QString ip, QString mac, QString name, quint16 port);
 
     /**
      * @brief Use "wake on lan" feature to wake up the computer.
      * The macAddress and ip must be set.
      * @param port Configured port for wakeup.
      */
-    void wakeup(quint16 port = 9);
+    void wakeup();
     /**
      * @brief Restart the computer.
      * The macAddress and ip must be set.
@@ -39,6 +41,7 @@ public:
      */
     bool isAwake();
     void getStats();
+    QString getName();
 };
 
 #endif // COMPUTER_H

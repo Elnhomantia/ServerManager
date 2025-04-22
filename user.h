@@ -11,7 +11,7 @@ private:
     QString privateKeyPath;
 
 public:
-    User(QString name, QString privateKeyPath = "");
+    User(QString name, QString privateKeyPath);
     ~User();
     QString getUserName();
     QString getPrivateKeyPath();

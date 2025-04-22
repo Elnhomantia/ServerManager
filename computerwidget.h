@@ -18,10 +18,14 @@ public:
     explicit ComputerWidget(QWidget *parent = nullptr);
     ~ComputerWidget();
 
+    void setComputer(Computer * c);
+
 private slots:
     void on_startButton_clicked();
     void on_rebootButton_clicked();
     void on_shutdownButton_clicked();
+
+    void on_editComputerButton_clicked();
 
 private:
     Ui::ComputerWidget *ui;

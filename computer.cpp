@@ -7,9 +7,9 @@
 #include "sshClient.h"
 #include "exception.h"
 
-Computer::Computer(User u) : user(u) {}
+Computer::Computer(User u, QString ip, QString mac, QString name, quint16 port) : ipAddress(ip), macAddress(mac), name(name), user(u), port(port) {}
 
-void Computer::wakeup(quint16 port)
+void Computer::wakeup()
 {
     QByteArray mac = QByteArray::fromHex(this->macAddress.remove(':').toLatin1());
 
@@ -21,7 +21,7 @@ void Computer::wakeup(quint16 port)
     }
 
     QUdpSocket udpSocket;
-    qint64 bytesSent = udpSocket.writeDatagram(packet, QHostAddress(this->ipAddress), port);
+    qint64 bytesSent = udpSocket.writeDatagram(packet, QHostAddress(this->ipAddress), this->port);
 
     if (bytesSent == -1) {
         qDebug() << "Could not send wakeup packet : " << udpSocket.errorString();
@@ -57,6 +57,11 @@ void Computer::shutdown()
         throw Exception<ComputerManagerError>("Failed to launch shutdown command.");
     }
 }
+
+QString Computer::getName()
+{
+    return this->name;
+}
 void Computer::getStats()
 {
     QStringList commands;
@@ -75,3 +80,4 @@ void Computer::getStats()
         throw Exception<ComputerManagerError>("Failed to get computer stats.");
     }
 }
+
