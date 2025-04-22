@@ -13,12 +13,15 @@ MainWindow::MainWindow(QWidget *parent)
     }
     QPushButton {
         background-color: #d3d3d3;
+        color: #2b2b2b;
     }
     QPushButton:hover {
         background-color: #eeeeee;
+        color: #2b2b2b;
     }
     QPushButton:pressed {
         background-color: #b0b0b0;
+        color: #d3d3d3;
     }
     )");
 }

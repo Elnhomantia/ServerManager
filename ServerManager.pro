@@ -12,8 +12,10 @@ CONFIG += conan_basic_setup
 
 SOURCES += \
     computer.cpp \
+    computerinfo.cpp \
     computerwidget.cpp \
     dialwidget.cpp \
+    hexspinbox.cpp \
     main.cpp \
     mainwindow.cpp \
     sshClient.cpp \
@@ -21,14 +23,17 @@ SOURCES += \
 
 HEADERS += \
     computer.h \
+    computerinfo.h \
     computerwidget.h \
     dialwidget.h \
     exception.h \
+    hexspinbox.h \
     mainwindow.h \
     sshClient.h \
     user.h
 
 FORMS += \
+    computerinfo.ui \
     computerwidget.ui \
     mainwindow.ui
 

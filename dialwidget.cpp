@@ -7,8 +7,8 @@ DialWidget::DialWidget(QWidget *parent) : QDial(parent), color(QColor(Qt::green)
     connect(this, &QDial::valueChanged, this, &DialWidget::onValueChanged);
     this->setRange(0, 100);
 
-    this->setFocusPolicy(Qt::NoFocus);
-    this->setAttribute(Qt::WA_TransparentForMouseEvents);
+    //this->setFocusPolicy(Qt::NoFocus);
+    //this->setAttribute(Qt::WA_TransparentForMouseEvents);
     this->setNotchesVisible(false);
 
 }
