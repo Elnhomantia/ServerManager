@@ -3,39 +3,24 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-CONFIG += conan_basic_setup
- include(conanbuildinfo.pri)
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    computer.cpp \
-    computerinfo.cpp \
-    computerwidget.cpp \
-    dialwidget.cpp \
-    hexspinbox.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    sshClient.cpp \
-    user.cpp
+INCLUDEPATH += $$PWD/src/ \
+               $$PWD/src/core \
+               $$PWD/src/widget
 
-HEADERS += \
-    computer.h \
-    computerinfo.h \
-    computerwidget.h \
-    dialwidget.h \
-    exception.h \
-    hexspinbox.h \
-    mainwindow.h \
-    sshClient.h \
-    user.h
+SOURCES += $$files(src/*.cpp, false) \
+           $$files(src/core/*.cpp, false) \
+           $$files(src/widget/*.cpp, false)
 
-FORMS += \
-    computerinfo.ui \
-    computerwidget.ui \
-    mainwindow.ui
+HEADERS += $$files(src/*.h, false) \
+           $$files(src/core/*.h, false) \
+           $$files(src/widget/*.h, false)
+
+FORMS += $$files(src/ui/*.ui, false)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
