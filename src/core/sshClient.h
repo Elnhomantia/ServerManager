@@ -16,13 +16,12 @@ class SshClient : public QObject
 private:
     const Computer & computer;
     QProcess * session;
-    QThread * worker;
     bool isConnected;
 
     static QString processCommand(const QString & command);
 
 private slots:
-    void handleError(QProcess::ProcessError error);
+    void handleConnectionError(QProcess::ProcessError error);
 
 signals:
     void connectionFailed(const QString & error);
@@ -41,6 +40,7 @@ public:
     void executeCommands(const QStringList & commands);
     void disconnect();
 
+    QProcess * getSession() const;
 };
 
 #endif // SSHCLIENT_H

@@ -2,35 +2,19 @@
 #include <core/exception.h>
 #include <QDebug>
 
-#include <QThread>
-
 SshClient::SshClient(const Computer & computer, QObject * parent)
     : QObject(parent)
     , computer(computer)
     , session(new QProcess)
-    , worker(new QThread)
     , isConnected(false)
 {
-
-    this->session->moveToThread(this->worker);
-    this->worker->start();
-
-    QProcess::connect(session, &QProcess::errorOccurred, this, &SshClient::handleError);
+    QProcess::connect(this->session, &QProcess::errorOccurred, this, &SshClient::handleConnectionError);
 }
 
-SshClient::~SshClient()
-{
-    this->disconnect();
-    this->worker->quit();
-    this->worker->wait();
-    this->session->deleteLater();
-    this->worker->deleteLater();
-}
+SshClient::~SshClient() {}
 
 void SshClient::connect()
 {
-    QMetaObject::invokeMethod(session, [this]() {
-
     QStringList args;
     args << "-tt"
          << "-i" << this->computer.getUser().getPrivateKeyPath() //private key
@@ -39,27 +23,31 @@ void SshClient::connect()
 
     session->start("ssh", args);
 
-    if (!session->waitForStarted(5000))
+    if (!session->waitForStarted(3000))
     {
-        qWarning() << session->errorString();
-        emit connectionFailed("SSH process failed to start : " + session->errorString());
+        this->handleConnectionError(this->session->error());
+        this->isConnected = false;
+        return;
+    }
+
+    if (!this->session->waitForReadyRead(3000))
+    {
+        this->handleConnectionError(this->session->error());
+        this->isConnected = false;
         return;
     }
 
     this->isConnected = true;
     emit this->connectionOpen();
-    }, Qt::QueuedConnection);
 }
 
 void SshClient::disconnect()
 {
     if (isConnected) {
-        QMetaObject::invokeMethod(session, [this]() {
             session->kill();
             session->waitForFinished(3000);
             isConnected = false;
             emit connectionClosed();
-        }, Qt::QueuedConnection);
     }
 }
 
@@ -70,7 +58,6 @@ void SshClient::executeCommand(const QString & command)
         return;
     }
 
-    QMetaObject::invokeMethod(session, [this, command]() {
         session->write((command + "\n").toUtf8());
 
         if (!session->waitForBytesWritten(3000)) {
@@ -92,7 +79,6 @@ void SshClient::executeCommand(const QString & command)
             emit this->commandResult(output.trimmed());
         }
         emit this->commandExecuted();
-    }, Qt::QueuedConnection);
 }
 
 void SshClient::executeCommands(const QStringList & commands)
@@ -102,7 +88,6 @@ void SshClient::executeCommands(const QStringList & commands)
         return;
     }
 
-    QMetaObject::invokeMethod(session, [this, commands]() {
         for(const QString & command : commands)
         {
             session->write((command + "\n").toUtf8());
@@ -126,10 +111,14 @@ void SshClient::executeCommands(const QStringList & commands)
             }
         }
         emit this->commandExecuted();
-    }, Qt::QueuedConnection);
 }
 
-void SshClient::handleError(QProcess::ProcessError error)
+QProcess * SshClient::getSession() const
+{
+    return session;
+}
+
+void SshClient::handleConnectionError(QProcess::ProcessError error)
 {
     QString errorMessage;
 

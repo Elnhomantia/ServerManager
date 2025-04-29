@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <core/sshClient.h>
+#include <QThread>
 
 class CommandsPipeline : public QObject
 {
@@ -10,9 +11,11 @@ class CommandsPipeline : public QObject
 
 private:
     SshClient client;
+    QThread * worker;
 
 public:
     CommandsPipeline(const Computer & com, QObject * parent = nullptr);
+    ~CommandsPipeline();
 
     void add(const QString & command);
 

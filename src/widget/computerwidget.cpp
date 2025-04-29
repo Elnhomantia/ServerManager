@@ -72,11 +72,11 @@ void ComputerWidget::on_editComputerButton_clicked()
 
 void ComputerWidget::on_sshCommandError(const QString & error)
 {
-    qDebug() << "on_sshCommandError : " + error;
+    qDebug() << error;
 }
 void ComputerWidget::on_sshCommandExecuted(const QString & result)
 {
-    qDebug() << "on_sshCommandExecuted" + result;
+    qDebug() << result;
 }
 void ComputerWidget::on_sshConnectionClosed()
 {
