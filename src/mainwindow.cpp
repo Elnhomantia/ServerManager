@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <widget/computerwidget.h>
+#include <widget/collapsable/collapsablewidget.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

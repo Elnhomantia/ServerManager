@@ -1,10 +1,11 @@
 #ifndef COMPUTERWIDGET_H
 #define COMPUTERWIDGET_H
 
+#include "qtextedit.h"
 #include <QWidget>
 
 #include <core/computer.h>
-#include <widget/dialwidget.h>
+#include <widget/dial/dialwidget.h>
 #include <core/commandspipeline.h>
 
 namespace Ui {
@@ -19,6 +20,8 @@ private:
     Ui::ComputerWidget *ui;
     Computer * computer = nullptr;
     CommandsPipeline runner;
+    QTextEdit * errorsArea;
+    QTextEdit * logsArea;
 
 private slots:
     void on_startButton_clicked();
@@ -29,7 +32,7 @@ private slots:
     void on_sshCommandError(const QString &error);
     void on_sshCommandExecuted(const QString & result);
     void on_sshConnectionClosed();
-    void on_sshConnectionFailed();
+    void on_sshConnectionFailed(const QString & error);
 
 
 

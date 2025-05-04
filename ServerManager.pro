@@ -1,4 +1,4 @@
-QT       += core gui network
+QT       += core gui network designer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,17 +10,31 @@ CONFIG += c++17
 
 INCLUDEPATH += $$PWD/src/ \
                $$PWD/src/core \
-               $$PWD/src/widget
+               $$PWD/src/widget \
+               $$PWD/src/widget/collapsable \
+               $$PWD/src/widget/hexspinbox \
+               $$PWD/src/widget/dial \
 
-SOURCES += $$files(src/*.cpp, false) \
-           $$files(src/core/*.cpp, false) \
-           $$files(src/widget/*.cpp, false)
+SOURCES += $$files(src/*.cpp) \
+           $$files(src/core/*.cpp) \
+           $$files(src/widget/*.cpp) \
+           $$files(src/widget/collapsable/*.cpp) \
+           $$files(src/widget/hexspinbox/*.cpp) \
+           $$files(src/widget/dial/*.cpp)
 
-HEADERS += $$files(src/*.h, false) \
-           $$files(src/core/*.h, false) \
-           $$files(src/widget/*.h, false)
 
-FORMS += $$files(src/ui/*.ui, false)
+HEADERS += $$files(src/*.h) \
+           $$files(src/core/*.h) \
+           $$files(src/widget/*.h) \
+           $$files(src/widget/collapsable/*.h) \
+           $$files(src/widget/hexspinbox/*.h) \
+           $$files(src/widget/dial/*.h)
+
+FORMS += $$files(src/ui/*.ui) \
+         $$files(src/widget/*.ui) \
+         $$files(src/widget/collapsable/*.ui) \
+         $$files(src/widget/hexspinbox/*.ui) \
+         $$files(src/widget/dial/*.ui)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

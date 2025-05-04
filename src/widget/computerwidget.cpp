@@ -2,6 +2,7 @@
 #include "ui_computerwidget.h"
 
 #include <widget/computerinfo.h>
+#include <widget/collapsable/collapsablewidget.h>
 
 ComputerWidget::ComputerWidget(QWidget *parent, Computer *c)
     : QWidget(parent)
@@ -19,6 +20,28 @@ ComputerWidget::ComputerWidget(QWidget *parent, Computer *c)
                       this, &ComputerWidget::on_sshConnectionClosed);
     QProcess::connect(&(this->runner.getClient()), &SshClient::connectionFailed,
                       this, &ComputerWidget::on_sshConnectionFailed);
+
+    CollapsableWidget * errorsFrame = new CollapsableWidget("Errors", this);
+    QScrollArea * errorsArea = new QScrollArea(errorsFrame);
+    QVBoxLayout * errorsLayout = new QVBoxLayout(errorsArea);
+    this->errorsArea = new QTextEdit(errorsArea);
+    this->errorsArea->setReadOnly(true);
+    this->errorsArea->setFocusPolicy(Qt::NoFocus);
+    errorsLayout->addWidget(this->errorsArea);
+    errorsArea->setLayout(errorsLayout);
+    errorsFrame->getContent()->addWidget(errorsArea);
+    ui->contentLayout->addWidget(errorsFrame);
+
+    CollapsableWidget * logsFrame = new CollapsableWidget("Logs", this);
+    QScrollArea * logsArea = new QScrollArea(logsFrame);
+    QVBoxLayout * logsLayout = new QVBoxLayout(logsArea);
+    this->logsArea = new QTextEdit(logsArea);
+    this->logsArea->setReadOnly(true);
+    this->logsArea->setFocusPolicy(Qt::NoFocus);
+    logsLayout->addWidget(this->logsArea);
+    logsArea->setLayout(logsLayout);
+    logsFrame->getContent()->addWidget(logsArea);
+    ui->contentLayout->addWidget(logsFrame);
 }
 
 ComputerWidget::~ComputerWidget()
@@ -72,7 +95,7 @@ void ComputerWidget::on_editComputerButton_clicked()
 
 void ComputerWidget::on_sshCommandError(const QString & error)
 {
-    qDebug() << error;
+    this->errorsArea->append(error);
 }
 void ComputerWidget::on_sshCommandExecuted(const QString & result)
 {
@@ -82,8 +105,8 @@ void ComputerWidget::on_sshConnectionClosed()
 {
 
 }
-void ComputerWidget::on_sshConnectionFailed()
+void ComputerWidget::on_sshConnectionFailed(const QString & error)
 {
-
+    this->errorsArea->append(error);
 }
 
