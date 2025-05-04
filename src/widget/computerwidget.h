@@ -1,7 +1,7 @@
 #ifndef COMPUTERWIDGET_H
 #define COMPUTERWIDGET_H
 
-#include "qtextedit.h"
+#include <QTextEdit>
 #include <QWidget>
 
 #include <core/computer.h>
