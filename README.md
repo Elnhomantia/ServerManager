@@ -10,3 +10,6 @@ SSH connection are async and uses signals to exchange data between threads. (Thi
 ## Build
 This uses Qt with Cmake to build. Get Qt creator, load the cmake file, and build the app.
 It should be possible to build on both Linux and Windows.
+
+## NOTICE
+This project is still WIP.
